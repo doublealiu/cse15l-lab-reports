@@ -44,4 +44,4 @@ SpongeBob spongeBob = new SpongeBob(config);
 spongeBob.catchJellies();
 ```
 
-Notice how we use a configuration object and pass it into the constructure of the object that we are configuring. *Why not use a builder?* **Because I said so.**
+Notice how we use a configuration object and pass it into the constructor of the object that we are configuring. *Why not use a builder?* **Because I said so.**
