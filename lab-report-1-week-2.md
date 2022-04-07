@@ -1,0 +1,1 @@
+![Image](res/lab-report-1-week-2-image.png)
