@@ -27,7 +27,7 @@ This tutorial focuses on the *jellyfishing* functionality of Sponge4J, but there
 Now that we've gone over the conceptual overview of the library, let's get into the code.
 
 We can start with:
-```
+```java
 SpongeBob spongeBob = new SpongeBob();
 spongeBob.catchJellies();
 ```
@@ -35,7 +35,7 @@ To get Spongebob to start catching jellyfish.
 
 For some more advanced jelly catching techniques, we can instantiate the SpongeBob object with a configuration first:
 
-```
+```java
 SpongeBobConfiguration config = new SpongeBobConfiguration()
     .eagerness(5)
     .capacity(6)
