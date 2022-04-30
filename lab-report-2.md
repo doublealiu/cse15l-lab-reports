@@ -1,24 +1,47 @@
 # Lab Report 2
 
-During the week 3 lab I encountered 2 failure inducing inputs. Here are the links to the [nested input](report-2-res/nested-break-test.md) and the [newline input](report-2-res/newline-break-test.md). I don't have the screen shots anymore but I have it written down in the [commit message](https://github.com/doublealiu/markdown-parser/commit/696a29493ccd1105e33d429d02f3e1af0d0defdd) for the nested input that the original program would output the link as:
+## Input 1
+During the week 3 lab one of the failure inducing inputs was this one:
 
-`[(](https://www.youtube.com/)]`
+[newline input](report-2-res/newline-break-test.md)
 
-(Note: I can't actually reproduce this because I had actually modified my code beforehand to solve the test file we were initially given. Thus, the default code actually passes this input but my code did not)
-
-When run on the newline input, the original input wouldn't even output anything. I have it written down in the [commit](https://github.com/doublealiu/markdown-parser/commit/b2f2fdd098b8ccc1ce9ee49f239036f1bd353cdf) that it would simply hang indefinitely until I killed the program.
+The input was essentially just a file with a link with some more text following it. When run, the program would simply hang indefinitely while reading the input:
 
 ![Image](report-2-res/newline-break.png)
 
 (You can't tell but I Ctrl-C-ed when it was hanging)
 
-After reading the code for a little, I think almost all the issues just kind of came to me so I ended up just doing one commit for both bugs. I probably shouldn't have done this since I'm prone to write more bugs if I push big commits like this, but I think this time I just felt like I could visualize the solution very easily so I just went for it. Here was the initial code change for these 2 bugs:
+The commit for this fix is a little more convoluted. I ended up fixing most of the glaring issues with the program in 1 go, even though I should have tried to incrementally test and fix each bug I encountered with my different inputs. The part of the commit that applies to this specific bug was the adding of the `linkExists()` method and its use in the while loop.
 
 ![Image](report-2-res/code-change.png)
 
-I think these 2 failure inducing inputs were pretty simple in terms of debugging. Each symptom of failure corresponded to some specific issue with the program. The reason that the nested test case printed incorrectly was because the program's determinations of what constituted the hyperlink and text components of a markdown link were simply incorrect. The newline test made the program run forever because the terminating condition in the while loop was not strict enough. 
+The newline test made the program run forever because the terminating condition in the while loop was not strict enough. More specifically, it assumed that the markdown file would just end once it was done reading all the links, which clearly is not always the case. Ultimately this was an isolated symptom, and since the test case didn't trip up the program anywhere else it was pretty clear what the bug was. 
 
-I also encountered a bug in week 4 with the [test-file8.md](report-2-res/code-change.png) file that we were provided as additional tests. Only the test for this file failed for me so I didn't have any pairs of symptoms to cross-reference. The file doesn't actually contain any links but when run the it will print a link anyway:
+Side note, I call it the newline test because I was inspired by an initial bug with the original test file. During the lab it was announced that the extra newline at the end of the initial test file that was given to us would make the program hang indefinitely since GitHub liked to add new lines at EOF. Thinking about it more I realized I could generalize this case to simply adding anything after the last link to make the program hang.
+
+## Input 2
+
+During the week 3 lab I also encountered another failing input:
+
+[noncontiguous link test](report-2-res/breaking-test.md)
+
+When run the program would incorrectly classify some of the text in the first line as a link:
+
+![Image](report-2-res/breaking-test2.png)
+
+Again, I ended up writing the fixes for my initial tests in one go. It was not a wise idea in hindsight since it means I have to watch for basically triple the bugs when fixing 3 bugs in one commit, and it doesn't make for understanding which code change corresponded to what bug fix easy. The part of the commit that corresponds to the fix for this was the addition on line 33 of the check for `closeBracket + 1 == openParen`.
+
+![Image](report-2-res/code-change.png)
+
+I think the reason that this test case printed incorrectly was because the program's determinations of what constituted a link in markdown were in correct. The symptom was that things that were not links were still being printed as links and the bug was simply that the checks weren't tight enough. More specifically, I noticed that one strict rule of markdown links is that the opening parantheses must come right after the closing bracket, which was something that the original program didn't account for.
+
+## Input 3
+
+I also encountered a bug in week 4 with this input:
+
+[test-file8.md](report-2-res/test-file8.md) 
+
+This is the file that we were provided as additional tests. Only the test for this file failed for me so I didn't have any pairs of symptoms to cross-reference. The file doesn't actually contain any links but when run the it will print a link anyway:
 
 ![Image](report-2-res/testfile8.png)
 
