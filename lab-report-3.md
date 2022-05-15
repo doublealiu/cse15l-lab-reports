@@ -48,8 +48,8 @@ Here is me cloning the repository on my computer, SCP-ing it into my lab account
 
 The test fails because I deleted a file in my commit for the lab report. Here is me doing all that in one scp command. I've already cloned the repository so I'm just running the SCP command:
 
-![Image](/report-3-res/part_3_21.png)
+![Image](/report-3-res/part3_updated1.png)
 
-![Image](/report-3-res/part_3_22.png)
+![Image](/report-3-res/part3_updated2.png)
 
-For some reason the tests don't compile when I run them through this multiline command, but they run fine when I manually SSH in and run them.
+Once again my test fails since I haven't replaced the file deleted. I used powershell this time because for my normal command line wasn't cooperating with me.
